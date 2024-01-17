@@ -145,9 +145,10 @@ public class GameScreen implements Screen {
                         Wall wall = new Wall(diff + r * 16, c * 16, stage);
                     }
                     case Entry -> {
-
+                        Entry entry = new Entry(diff + r * 16, c * 16, stage);
                     }
                     case Exit -> {
+
                     }
                     case Trap -> {
 
