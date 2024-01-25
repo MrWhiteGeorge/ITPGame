@@ -125,7 +125,7 @@ public class BaseActor extends Group
         TextureRegion tr = animation.getKeyFrame(0);
         float w = tr.getRegionWidth();
         float h = tr.getRegionHeight();
-        setSize( w, h );
+        setSize( w, h);
         setOrigin( w/2, h/2 );
 
         if (boundaryPolygon == null)

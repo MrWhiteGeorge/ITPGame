@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -42,7 +43,7 @@ public class MenuScreen implements Screen {
     public MenuScreen(MazeRunnerGame game) {
         this.game = game;
         var camera = new OrthographicCamera();
-        camera.zoom = 1.5f; // Set camera zoom for a closer view
+        camera.zoom = 2f; // Set camera zoom for a closer view
 
         Viewport viewport = new ScreenViewport(camera); // Create a viewport with the camera
         stage = new Stage(viewport, game.getSpriteBatch()); // Create a stage for UI elements
@@ -110,27 +111,36 @@ public class MenuScreen implements Screen {
 
                 final int[] max = {Integer.MIN_VALUE, Integer.MIN_VALUE};
                 properties.forEach((k, v) -> {
-                    String[] rc = ((String)k).split(",");
-                    int r = Integer.parseInt(rc[0]);
-                    int c = Integer.parseInt(rc[1]);
-                    if (r > max[0]) {
-                        max[0] = r;
-                    }
-                    if (c > max[1]) {
-                        max[1] = c;
+                    try {
+                        String[] rc = ((String) k).split(",");
+                        int r = Integer.parseInt(rc[0]);
+                        int c = Integer.parseInt(rc[1]);
+                        if (r > max[0]) {
+                            max[0] = r;
+                        }
+                        if (c > max[1]) {
+                            max[1] = c;
+                        }
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
                     }
                 });
+                System.out.println("Borders: " + Arrays.toString(max));
                 int[][] board = new int[max[0] + 1][max[1] + 1];
                 for (var array : board) {
                     Arrays.fill(array, ElementType.Floor.ordinal());
                 }
                 // Wall- 0 , Entry - 1, Exit - 2, Trap - 3, Enemy - 4, Key - 5, Floor - 6;
                 properties.forEach((k, v) -> {
-                    String[] xy = ((String)k).split(",");
-                    int r = Integer.parseInt(xy[0]);
-                    int c = Integer.parseInt(xy[1]);
-                    int type = Integer.parseInt((String) v);
-                    board[r][c] = type;
+                    try {
+                        String[] xy = ((String) k).split(",");
+                        int r = Integer.parseInt(xy[0]);
+                        int c = Integer.parseInt(xy[1]);
+                        int type = Integer.parseInt((String) v);
+                        board[r][c] = type;
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                    }
                 });
 
                 game.setBoard(board);
