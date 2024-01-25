@@ -31,6 +31,8 @@ import java.util.Properties;
  */
 public class MenuScreen implements Screen {
 
+    public int[][] arrayMap;
+
     private final Stage stage;
 
     private final MazeRunnerGame game;
@@ -142,7 +144,7 @@ public class MenuScreen implements Screen {
                         ex.printStackTrace();
                     }
                 });
-
+                arrayMap = board;
                 game.setBoard(board);
 
             }
