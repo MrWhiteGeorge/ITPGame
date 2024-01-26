@@ -22,6 +22,8 @@ public class GameScreen implements Screen {
     private final OrthographicCamera camera;
     private final BitmapFont font;
     private final Hero hero;
+    private int[][] board;
+
 
     private float sinusInput = 0f;
 
@@ -112,9 +114,19 @@ public class GameScreen implements Screen {
  */
     }
 
+    private void clearMaze() {
+        if (stage != null) {
+            stage.clear();  // Clear all actors from the stage
+        }
+    }
+
     @Override
     public void resize(int width, int height) {
         camera.setToOrtho(false);
+        clearMaze();
+        if (board != null) {
+            setBoard(board); // Recalculate positions and sizes
+        }
     }
 
     @Override
@@ -139,6 +151,8 @@ public class GameScreen implements Screen {
     }
 
     public void setBoard(int[][] board) {
+        this.board = board;
+
         final float screenWidth = Gdx.graphics.getWidth();
         final float screenHeight = Gdx.graphics.getHeight();
 
