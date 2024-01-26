@@ -141,44 +141,51 @@ public class GameScreen implements Screen {
     public void setBoard(int[][] board) {
         final float screenWidth = Gdx.graphics.getWidth();
         final float screenHeight = Gdx.graphics.getHeight();
-        float diff = (screenWidth - screenHeight) / 7;
 
-        System.out.println("screenWidth: " + screenWidth);
-        System.out.println("screenHeight: " + screenHeight);
-        System.out.println("diff: " + diff);
-        // diff = 40;
+        // Calculate the size of each cell for 70% of the screen
+        float cellWidth = (screenWidth * 0.7f) / board[0].length;
+        float cellHeight = (screenHeight * 0.7f) / board.length;
 
+        // Calculate offsets to center the maze both horizontally and vertically
+        float xOffset = (screenWidth - (cellWidth * board[0].length)) / 2;
+        float yOffset = (screenHeight - (cellHeight * board.length)) / 2;
 
         for (int r = 0; r < board.length; r++) {
             for (int c = 0; c < board[r].length; c++) {
                 int type = board[r][c];
 
+                // Calculate the position for each element with offsets
+                float x = xOffset + c * cellWidth;
+                float y = yOffset + (board.length - r - 1) * cellHeight;
+
                 switch (ElementType.findByOrdinal(type)) {
-
-                    case Wall -> {
-                        Wall wall = new Wall(diff + r * 16, c * 16, stage);
-                    }
-                    case Entry -> {
-                        Entry entry = new Entry(diff + r * 16, c * 16, stage);
-                    }
-                    case Exit -> {
-
-                    }
-                    case Trap -> {
-
-                    }
-                    case Enemy -> {
-
-                    }
-                    case Key -> {
-                    }
-                    case Floor -> {
-                        Floor floor = new Floor( diff + r * 16, c * 16, stage);
-                    }
+                    case Wall:
+                        Wall wall = new Wall(x, y, stage);
+                        wall.setSize(cellWidth, cellHeight);
+                        break;
+                    case Entry:
+                        Entry entry = new Entry(x, y, stage);
+                        entry.setSize(cellWidth, cellHeight);
+                        break;
+                    case Exit:
+                        // Create and position Exit element
+                        break;
+                    case Trap:
+                        // Create and position Trap element
+                        break;
+                    case Enemy:
+                        // Create and position Enemy element
+                        break;
+                    case Key:
+                        // Create and position Key element
+                        break;
+                    case Floor:
+                        Floor floor = new Floor(x, y, stage);
+                        floor.setSize(cellWidth, cellHeight);
+                        break;
                 }
             }
         }
-
     }
 
 
